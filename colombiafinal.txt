@@ -1,0 +1,23 @@
+---
+  - host: all 
+    become: true
+    tasks: 
+            - name: "Install apache app"
+              yum:
+                name: httpd
+                state: present
+              when: ansible_distribution="CentOS"
+              
+            - name: "change ports for apache app"
+              lineinfile:
+                path: /etc/httpd/conf/httpd.conf
+                regexp: '^Listen '
+                insertafter: '^#Listen '
+                line: 'Listen 8080'
+            
+            - name: "Insert comment into file apache"
+              lineinfile:
+                path: /etc/services
+                regexp: '^# port for http'
+                insertbefore: '^www.*80/tcp'
+                line: '# port for http by default'
