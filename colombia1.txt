@@ -1,0 +1,8 @@
+---
+ - hosts: all
+   become: true
+   tasks: 
+          - name: "change parameter selinux - desactive"
+              path: /etc/selinux/config
+              regexp: '^SELINUX='
+              line: 'SELINUX=enforcing'
