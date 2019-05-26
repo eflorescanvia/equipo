@@ -1,0 +1,19 @@
+--- 
+ - hosts: all
+   become: true
+   tasks:
+         - name: "change values to sudoer"
+           lineinfile:
+            path: /etc/sudoers
+            state: absent
+            regexp: '^%wheel'
+         
+         - name: "add hosts words to linefile"
+           lineinfile: 
+            path: /etc/hosts
+            regexp: "^127\.0\.0\.1"
+            line: "127.0.0.1 localhost"
+            owner: root
+            group: root
+            mode: 0644
+            
